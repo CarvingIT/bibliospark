@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('biblio_lookups', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('lookup_query_id');
             $table->text('details');
             $table->timestamps(); 
         });
