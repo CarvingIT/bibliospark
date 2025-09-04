@@ -51,10 +51,15 @@ class LookupBiblios extends Command
                 $query = ['issn' => $d['issn']];
             }
             else{ // use title/author to identify a biblio; this is not perfect
+                /*
                 foreach($query_attributes as $qa){
-                    if(!empty($d[$qa]))
-                    $query[$qa] = $d[$qa];
+                    if(!empty($d[$qa])){
+                        $query[$qa] = $d[$qa];
+                    }
                 }
+                */
+                $query = ['title'=>$d['title']];
+                //print_r($query); continue;
             }
             // see if you get a match
             $biblio = $this->getMatchingBiblio($query);
@@ -86,7 +91,12 @@ class LookupBiblios extends Command
     protected function getMatchingBiblio($query){
         $biblio = Biblio::whereRaw('1=1');
         foreach($query as $k=>$v){
-            $biblio = $biblio->where($k, $v);
+            if($k == 'publication_year'){
+                $biblio = $biblio->where('published_date', 'LIKE', '%'.$v.'%');
+            }
+            else{
+                $biblio = $biblio->where($k, $v);
+            }
         }
         return $biblio->first();
     } 
