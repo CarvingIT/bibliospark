@@ -19,7 +19,8 @@ return new class extends Migration
                 $table->string('issn', 8)->nullable()->unique();
                 $table->string('title');
                 $table->text('authors')->nullable();
-                $table->text('publishers')->nullable();
+                $table->text('publication')->nullable();
+                $table->string('publication_year')->nullable();
                 $table->string('edition')->nullable();
                 $table->text('cover_images')->nullable();
                 $table->text('all_details');
